@@ -52,7 +52,7 @@ namespace TomatoFarm
         {
             lock (Locker)
             {
-                if(_workday.GetSummary().TimeSlots.Last().Type == TimeSlotType.Break)
+                if(_workday.GetSummary().TimeSlots.First().Type == TimeSlotType.Break)
                     return;
                 var breakType = GetBreakType();
                 var @break = MakeBreak(breakType);
@@ -70,7 +70,7 @@ namespace TomatoFarm
         private TimeSlotType GetBreakType()
         {
             const int timeSlotRoundSize = 2*TomatoRoundSize - 1;
-            var timeSlotRound = _workday.GetSummary().TimeSlots.OrderByDescending(p => p.StartTime).Take(timeSlotRoundSize).ToList();
+            var timeSlotRound = _workday.GetSummary().TimeSlots.Take(timeSlotRoundSize).ToList();
             return timeSlotRound.Count == timeSlotRoundSize ? TimeSlotType.LongBreak : TimeSlotType.Break;
         }
 

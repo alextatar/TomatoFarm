@@ -9,6 +9,6 @@ namespace TomatoFarm.DataElements
         public TimeSpan StartTime { get; set; }
         public TimeSpan RegularHoursEndTime { get; set; }
         public TimeSpan? EndTime { get; set; }
-        public IList<TimeSlot> TimeSlots { get; set; }
+        public Stack<TimeSlot> TimeSlots { get; set; }
     }
 }

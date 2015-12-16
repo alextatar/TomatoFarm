@@ -82,7 +82,7 @@ namespace TomatoFarm.Tests
             var summary = _app.GetSummary();
 
             summary.TimeSlots.Should().HaveCount(2);
-            var tomato = summary.TimeSlots.First();
+            var tomato = summary.TimeSlots.Last();
             tomato.EndTime.ShouldBeEquivalentTo(_currentDate.TimeOfDay);
             dueTime.ShouldBeEquivalentTo(_appSettings.TomatoSize);
             _wasTomatoDueFired.Should().BeTrue();
@@ -188,8 +188,8 @@ namespace TomatoFarm.Tests
             var summary = _app.GetSummary();
 
             summary.TimeSlots.Should().HaveCount(2);
-            summary.TimeSlots.First().Type.ShouldBeEquivalentTo(TimeSlotType.Tomato);
-            summary.TimeSlots.Last().Type.ShouldBeEquivalentTo(TimeSlotType.Break);
+            summary.TimeSlots.Last().Type.ShouldBeEquivalentTo(TimeSlotType.Tomato);
+            summary.TimeSlots.First().Type.ShouldBeEquivalentTo(TimeSlotType.Break);
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace TomatoFarm.Tests
             var summary = _app.GetSummary();
 
             summary.TimeSlots.Should().HaveCount(8);
-            summary.TimeSlots.Last().Type.ShouldBeEquivalentTo(TimeSlotType.LongBreak);
+            summary.TimeSlots.First().Type.ShouldBeEquivalentTo(TimeSlotType.LongBreak);
         }
 
         [Test]
@@ -239,8 +239,8 @@ namespace TomatoFarm.Tests
             var summary = _app.GetSummary();
 
             summary.TimeSlots.Should().HaveCount(16);
-            summary.TimeSlots[7].Type.ShouldBeEquivalentTo(TimeSlotType.LongBreak);
-            summary.TimeSlots.Last().Type.ShouldBeEquivalentTo(TimeSlotType.LongBreak);
+            summary.TimeSlots.ToArray()[8].Type.ShouldBeEquivalentTo(TimeSlotType.LongBreak);
+            summary.TimeSlots.First().Type.ShouldBeEquivalentTo(TimeSlotType.LongBreak);
         }
 
         [Test]

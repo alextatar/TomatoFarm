@@ -11,7 +11,7 @@ namespace TomatoFarm
         private readonly WorkSummary _summary;
         private bool _isPaused;
 
-        private TimeSlot Current => _summary.TimeSlots.LastOrDefault();
+        private TimeSlot Current => _summary.TimeSlots.FirstOrDefault();
 
         private WorkDay(DateTime date, TimeSpan regularHours)
         {
@@ -20,7 +20,7 @@ namespace TomatoFarm
                 Date = date.Date,
                 StartTime = date.TimeOfDay,
                 RegularHoursEndTime = date.TimeOfDay + regularHours,
-                TimeSlots = new List<TimeSlot>()
+                TimeSlots = new Stack<TimeSlot>()
             };
         }
 
@@ -54,7 +54,7 @@ namespace TomatoFarm
             CloseCurrentSlot(timeStamp);
 
             _isPaused = false;
-            _summary.TimeSlots.Add(new TimeSlot { StartTime = timeStamp, Type = type, IsInProgress = true });
+            _summary.TimeSlots.Push(new TimeSlot { StartTime = timeStamp, Type = type, IsInProgress = true });
         }
 
         private void CheckTimeSlotType(TimeSlotType type)

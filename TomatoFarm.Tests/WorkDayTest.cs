@@ -81,8 +81,8 @@ namespace TomatoFarm.Tests
             var result = _workday.GetSummary();
 
             result.TimeSlots.Should().HaveCount(2);
-            CheckFinishedTimeSlot(result.TimeSlots.First(), breakStartTime);
-            result.TimeSlots.Last().IsInProgress.Should().BeTrue();
+            CheckFinishedTimeSlot(result.TimeSlots.Last(), breakStartTime);
+            result.TimeSlots.First().IsInProgress.Should().BeTrue();
         }
 
         [Test]
@@ -96,10 +96,11 @@ namespace TomatoFarm.Tests
             _workday.StartTimeSlot(secondTomatoStartTime, TimeSlotType.Tomato);
             var result = _workday.GetSummary();
 
-            result.TimeSlots.Should().HaveCount(3);
-            CheckFinishedTimeSlot(result.TimeSlots[0], breakStartTime);
-            CheckFinishedTimeSlot(result.TimeSlots[1], secondTomatoStartTime);
-            result.TimeSlots[2].IsInProgress.Should().BeTrue();
+            var timeSlots = result.TimeSlots.ToArray();
+            timeSlots.Should().HaveCount(3);
+            CheckFinishedTimeSlot(timeSlots[2], breakStartTime);
+            CheckFinishedTimeSlot(timeSlots[1], secondTomatoStartTime);
+            timeSlots[0].IsInProgress.Should().BeTrue();
         }
 
         [Test]
